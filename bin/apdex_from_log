@@ -12,4 +12,11 @@ opts.on('-t', '--threshold [THRESHOLD]', Float, "The apdex threshold") {|t| thre
 opts.on('-c', '--time-column [COLUMN]', Integer, "The column of the request time in the log file") {|column| time_column = column}
 opts.parse!(ARGV)
 
-Apdex::CalculateFromLog.new(:time_column => time_column).call(threshold, $stdin)
+values = Apdex::CalculateFromLog.new(:time_column => time_column).call(threshold, $stdin)
+puts([
+  "Score: #{values[:score]}",
+  "Satisfied: #{values[:satisfied]}",
+  "Tolerating: #{values[:tolerating]}",
+  "Frustrated: #{values[:frustrated]}",
+]).join("\n")
+
