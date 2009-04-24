@@ -1,7 +1,7 @@
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "pivotal-apdex"
+    s.name = "apdex"
     s.executables = "apdex_from_log"
     s.summary = "Calculate apdex scores from an Apache or Nginx log"
     s.email = "pivotallabsopensource@googlegroups.com"
