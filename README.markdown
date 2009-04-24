@@ -10,6 +10,15 @@ Usage
     egrep '/users/.+/edit' access.log | apdex_from_log --threshold 0.5 --time-column 11
 
 
+Example Output
+==============
+
+    Score: 0.81
+    Satisfied: 63
+    Tolerating: 37
+    Frustrated: 0
+
+
 Community
 =========
 
