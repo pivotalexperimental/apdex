@@ -7,6 +7,16 @@ module Apdex
       @time_column = params[:time_column] || raise(ArgumentError, "You must specify a time_column")
     end
 
+    def print(threshold, input)
+      values = call(threshold, input)
+      [
+        "Score: #{values[:score]}",
+        "Satisfied: #{values[:satisfied]}",
+        "Tolerating: #{values[:tolerating]}",
+        "Frustrated: #{values[:frustrated]}",
+      ].join("\n")
+    end
+
     def call(threshold, input)
       values = input.map do |line|
         `echo '#{line.strip}' | awk '{print $11}'`.strip.to_f
@@ -22,7 +32,7 @@ module Apdex
           output[:frustrated] += 1
         end
       end
-      output[:score] = ("%0.2f" % (1.0 * (output[:satisfied] + output[:tolerating] / 2) / values.size)).to_f
+      output[:score] = ("%0.3f" % (1.0 * (output[:satisfied] + output[:tolerating] / 2) / values.size)).to_f
       output
     end
   end
