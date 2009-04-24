@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+require "optparse"
+require "apdex"
+
+threshold = 0.5
+time_column = nil
+
+opts = OptionParser.new
+#opts.on('-v', '--version')    { output_version ; exit 0 }
+#opts.on('-h', '--help')       { output_help }
+opts.on('-t', '--threshold [THRESHOLD]', Float, "The apdex threshold") {|t| threshold = t}
+opts.on('-c', '--time-column [COLUMN]', Integer, "The column of the request time in the log file") {|column| time_column = column}
+opts.parse!(ARGV)
+
+Apdex::CalculateFromLog.new(:time_column => time_column).call(threshold, $stdin)

@@ -1,0 +1,2 @@
+- Initial Release
+- Added Apdex::CalculateFromLog

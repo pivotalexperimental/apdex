@@ -1,10 +1,10 @@
 module Apdex
 # See http://www.apdex.org/overview.html
   class CalculateFromLog
-    attr_reader :time_position
+    attr_reader :time_column
 
     def initialize(params={})
-      @time_position = params[:time_position] || 11
+      @time_column = params[:time_column] || raise(ArgumentError, "You must specify a time_column")
     end
 
     def call(threshold, input)
