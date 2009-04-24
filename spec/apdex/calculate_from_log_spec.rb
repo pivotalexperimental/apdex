@@ -13,7 +13,7 @@ module Apdex
         204.16.153.246 - performatron [23/Apr/2009:16:57:30 -0700] "GET /myspace/compatibility/friend_model_matchings/new?model_id=17702&myspace_id=454017886 HTTP/1.1" 200 4269 3.000 "-" "httperf/0.9.0" "-"
         LOG
 
-        output = CalculateFromLog.new(11).call(0.5, input)
+        output = CalculateFromLog.new(:time_column => 11).call(0.5, input)
         output[:satisfied].should == 3
         output[:tolerating].should == 2
         output[:frustrated].should == 1
