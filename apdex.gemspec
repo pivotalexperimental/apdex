@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{apdex}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chad Woolley", "Brian Takita", "Pivotal Labs"]
-  s.date = %q{2009-04-24}
+  s.date = %q{2009-04-25}
   s.default_executable = %q{apdex_from_log}
   s.description = %q{Calculate apdex scores from an Apache or Nginx log}
   s.email = %q{pivotallabsopensource@googlegroups.com}
