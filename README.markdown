@@ -9,6 +9,10 @@ Usage
     
     egrep '/users/.+/edit' access.log | apdex_from_log --threshold 0.5 --time-column 11
 
+    # or
+
+    egrep '/users/.+/edit' access.log | awk '{print $11}' | apdex_from_log --threshold 0.5
+
 
 Example Output
 ==============
