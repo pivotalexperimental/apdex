@@ -4,7 +4,7 @@ module Apdex
     attr_reader :time_column
 
     def initialize(params={})
-      @time_column = params[:time_column] || raise(ArgumentError, "You must specify a time_column")
+      @time_column = params[:time_column]
     end
 
     def print(threshold, input)
@@ -18,9 +18,27 @@ module Apdex
     end
 
     def call(threshold, input)
-      values = input.map do |line|
-        `echo '#{line.strip}' | awk '{print $11}'`.strip.to_f
+      values = value_from_input(input)
+      output = categorize_values(values, threshold)
+      output[:score] = calculate_apdex(output)
+      output
+    end
+    
+    protected
+
+    def value_from_input(input)
+      if time_column
+        input.map do |line|
+          `echo '#{line.strip}' | awk '{print $11}'`.strip.to_f
+        end
+      else
+        input.map do |line|
+          line.strip.to_f
+        end
       end
+    end
+
+    def categorize_values(values, threshold)
       output = {}
       output[:satisfied] = output[:tolerating] = output[:frustrated] = 0
       values.each do |value|
@@ -32,8 +50,15 @@ module Apdex
           output[:frustrated] += 1
         end
       end
-      output[:score] = ("%0.3f" % (1.0 * (output[:satisfied] + output[:tolerating] / 2) / values.size)).to_f
       output
+    end
+
+    def calculate_apdex(output)
+      raw_score = (1.0 *
+        (output[:satisfied] + (output[:tolerating]/2)) /
+        (output[:satisfied] + output[:tolerating] + output[:frustrated])
+      )
+      ("%0.3f" % raw_score).to_f
     end
   end
 end
