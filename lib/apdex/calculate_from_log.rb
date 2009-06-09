@@ -19,9 +19,7 @@ module Apdex
 
     def call(threshold, input)
       values = value_from_input(input)
-      output = categorize_values(values, threshold)
-      output[:score] = calculate_apdex(output)
-      output
+      Calculate.new.call(threshold, values)
     end
     
     protected
@@ -36,29 +34,6 @@ module Apdex
           line.strip.to_f
         end
       end
-    end
-
-    def categorize_values(values, threshold)
-      output = {}
-      output[:satisfied] = output[:tolerating] = output[:frustrated] = 0
-      values.each do |value|
-        if value <= threshold
-          output[:satisfied] += 1
-        elsif value <= (threshold * 4)
-          output[:tolerating] += 1
-        else
-          output[:frustrated] += 1
-        end
-      end
-      output
-    end
-
-    def calculate_apdex(output)
-      raw_score = (1.0 *
-        (output[:satisfied] + (output[:tolerating]/2)) /
-        (output[:satisfied] + output[:tolerating] + output[:frustrated])
-      )
-      ("%0.3f" % raw_score).to_f
     end
   end
 end
