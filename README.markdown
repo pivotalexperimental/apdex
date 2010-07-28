@@ -29,3 +29,5 @@ Community
 Github: [http://github.com/pivotal/apdex](http://github.com/pivotal/apdex)
 
 Tracker: [http://www.pivotaltracker.com/projects/14145](http://www.pivotaltracker.com/projects/14145)
+
+Copyright (c) 2010 Pivotal Labs. This software is licensed under the MIT License.
